@@ -20,26 +20,29 @@ public class KKlient {
             while(true) {
                 String obecnyStan = gra.stanPlanszy();
                 char aktualnaTura = gra.czyjaTura();
+                String wynik = gra.sprawdzWygrana();
 
-                // 1. Odśwież widok planszy, jeśli zaszła zmiana
                 if (!obecnyStan.equals(ostatniStan)) {
                     System.out.println(obecnyStan);
-                    System.out.println("Teraz tura: " + aktualnaTura);
                     ostatniStan = obecnyStan;
-                }
+                    if (!wynik.equals("GRA W TOKU")) {
+                        System.out.println("KONIEC GRY: " + wynik);
+                        break; // Wyjście z pętli - koniec programu
+                    }
 
-                // 2. Jeśli jest moja tura - pytaj o ruch
+                    System.out.println("Teraz tura: " + aktualnaTura);
+                }
                 if (aktualnaTura == mojSymbol) {
-                    System.out.print("TWOJA KOLEJ! Podaj pole (0-8): ");
-                    // Program czeka tutaj na Twój ruch
+                    System.out.print("TWOJA KOLEJ (" + mojSymbol + ")! Podaj pole (0-8): ");
                     if (sc.hasNextInt()) {
                         int pole = sc.nextInt();
                         if (!gra.ruch(pole, mojSymbol)) {
-                            System.out.println("Błąd! Pole zajęte lub zły numer.");
+                            System.out.println("Błąd! Pole zajęte, zły numer lub nie Twoja tura.");
                         }
+                    } else {
+                        sc.next(); // Wyczyść błędny wpis
                     }
                 } else {
-                    // 3. Jeśli nie moja tura - czekaj i sprawdź ponownie za chwilę
                     Thread.sleep(1000);
                 }
             }

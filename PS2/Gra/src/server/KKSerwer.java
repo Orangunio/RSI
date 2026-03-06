@@ -34,6 +34,12 @@ public class KKSerwer extends UnicastRemoteObject implements GraInterface {
         for(int[] w : wygrywajace) {
             if(p[w[0]] == p[w[1]] && p[w[1]] == p[w[2]]) return "WYGRANA: " + p[w[0]];
         }
+        boolean pelna = true;
+        for(char pole : p) {
+            if(pole != 'X' && pole != 'O') { pelna = false; break; }
+        }
+        if(pelna) return "REMIS";
+
         return "GRA W TOKU";
     }
 
