@@ -11,34 +11,35 @@ public class KKlient {
         try {
             Registry reg = LocateRegistry.getRegistry("192.168.7.5", 1099);
             GraInterface gra = (GraInterface) reg.lookup("GraKK");
-
             Scanner sc = new Scanner(System.in);
-            System.out.print("Wybierz swój symbol (X lub O): ");
+
+            System.out.print("Wybierz symbol (X/O): ");
             char mojSymbol = sc.next().toUpperCase().charAt(0);
-
-            System.out.println("Połączono! Czekaj na ruchy...");
-
             String ostatniStan = "";
-            while(true) {
-                String stan = gra.stanPlanszy();
-                String wynik = gra.sprawdzWygrana();
 
-                if(!stan.equals(ostatniStan)) {
-                    System.out.println(stan);
-                    ostatniStan = stan;
-                    if(!wynik.equals("GRA W TOKU")) {
-                        System.out.println("KONIEC GRY! " + wynik);
-                        break;
-                    }
+            while(true) {
+                String obecnyStan = gra.stanPlanszy();
+                char aktualnaTura = gra.czyjaTura();
+
+                // 1. Odśwież widok planszy, jeśli zaszła zmiana
+                if (!obecnyStan.equals(ostatniStan)) {
+                    System.out.println(obecnyStan);
+                    System.out.println("Teraz tura: " + aktualnaTura);
+                    ostatniStan = obecnyStan;
                 }
-                if(gra.czyjaTura() == mojSymbol) {
-                    System.out.print("TWOJA TURA (" + mojSymbol + "). Podaj pole 0-8: ");
-                    int pole = sc.nextInt();
-                    if(!gra.ruch(pole, mojSymbol)) {
-                        System.out.println("Błąd: Nie twoja tura lub pole zajęte!");
+
+                // 2. Jeśli jest moja tura - pytaj o ruch
+                if (aktualnaTura == mojSymbol) {
+                    System.out.print("TWOJA KOLEJ! Podaj pole (0-8): ");
+                    // Program czeka tutaj na Twój ruch
+                    if (sc.hasNextInt()) {
+                        int pole = sc.nextInt();
+                        if (!gra.ruch(pole, mojSymbol)) {
+                            System.out.println("Błąd! Pole zajęte lub zły numer.");
+                        }
                     }
                 } else {
-                    // Czekanie
+                    // 3. Jeśli nie moja tura - czekaj i sprawdź ponownie za chwilę
                     Thread.sleep(1000);
                 }
             }
