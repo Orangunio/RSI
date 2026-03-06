@@ -16,31 +16,29 @@ public class KKlient {
             System.out.print("Wybierz swój symbol (X lub O): ");
             char mojSymbol = sc.next().toUpperCase().charAt(0);
 
-            Thread odswiezacz = new Thread(() -> {
-                String staraPlansza = "";
-                while(true) {
-                    try {
-                        String obecnaPlansza = gra.stanPlanszy();
-                        if(!obecnaPlansza.equals(staraPlansza)) {
-                            System.out.println(obecnaPlansza);
-                            System.out.println("Obecna tura: " + gra.czyjaTura());
-                            staraPlansza = obecnaPlansza;
-                        }
-                        Thread.sleep(500);
-                    } catch(Exception e) {}
-                }
-            });
-            odswiezacz.setDaemon(true);
-            odswiezacz.start();
+            System.out.println("Połączono! Czekaj na ruchy...");
 
+            String ostatniStan = "";
             while(true) {
+                String stan = gra.stanPlanszy();
+                String wynik = gra.sprawdzWygrana();
+
+                if(!stan.equals(ostatniStan)) {
+                    System.out.println(stan);
+                    ostatniStan = stan;
+                    if(!wynik.equals("GRA W TOKU")) {
+                        System.out.println("KONIEC GRY! " + wynik);
+                        break;
+                    }
+                }
                 if(gra.czyjaTura() == mojSymbol) {
-                    System.out.println("TWOJA TURA! Wybierz pole 0-8:");
+                    System.out.print("TWOJA TURA (" + mojSymbol + "). Podaj pole 0-8: ");
                     int pole = sc.nextInt();
                     if(!gra.ruch(pole, mojSymbol)) {
-                        System.out.println("Nieprawidłowy ruch!");
+                        System.out.println("Błąd: Nie twoja tura lub pole zajęte!");
                     }
                 } else {
+                    // Czekanie
                     Thread.sleep(1000);
                 }
             }
