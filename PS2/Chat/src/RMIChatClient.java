@@ -5,7 +5,7 @@ public class RMIChatClient {
     public static void main(String[] args) {
         try {
             System.setProperty("java.security.policy", "security.policy");
-            Registry reg = LocateRegistry.getRegistry("192.168.7.5", 1099);
+            Registry reg = LocateRegistry.getRegistry("10.28.207.24", 1099);
             ChatInterface chat = (ChatInterface) reg.lookup("ChatObject");
 
             Scanner sc = new Scanner(System.in);
