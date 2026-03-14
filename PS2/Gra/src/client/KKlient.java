@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class KKlient {
     public static void main(String[] args) {
         try {
-            Registry reg = LocateRegistry.getRegistry("192.168.7.5", 1099);
+            Registry reg = LocateRegistry.getRegistry("10.28.207.24", 1099);
             GraInterface gra = (GraInterface) reg.lookup("GraKK");
             Scanner sc = new Scanner(System.in);
 
@@ -40,7 +40,7 @@ public class KKlient {
                             System.out.println("Błąd! Pole zajęte, zły numer lub nie Twoja tura.");
                         }
                     } else {
-                        sc.next(); // Wyczyść błędny wpis
+                        sc.next();
                     }
                 } else {
                     Thread.sleep(1000);

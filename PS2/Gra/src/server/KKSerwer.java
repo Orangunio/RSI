@@ -45,7 +45,7 @@ public class KKSerwer extends UnicastRemoteObject implements GraInterface {
 
     public static void main(String[] args) {
         try {
-            System.setProperty("java.rmi.server.hostname", "192.168.7.5");
+            System.setProperty("java.rmi.server.hostname", "10.28.207.24");
             System.setProperty("java.security.policy", "security.policy");
 
             LocateRegistry.createRegistry(1099).rebind("GraKK", new KKSerwer());
