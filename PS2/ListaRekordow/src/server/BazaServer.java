@@ -33,7 +33,7 @@ public class BazaServer extends UnicastRemoteObject implements BazaInterface {
         try {
             // Wartość routowalna z innych komputerów
             System.setProperty("java.security.policy", "java.policy");
-            System.setProperty("java.rmi.server.hostname", "10.28.207.24");
+            System.setProperty("java.rmi.server.hostname", "192.168.7.5");
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("BazaSerwis", new BazaServer());
             System.out.println("Serwer Bazy gotowy...");

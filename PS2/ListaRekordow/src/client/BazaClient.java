@@ -12,7 +12,7 @@ public class BazaClient {
     public static void main(String[] args) {
         try {
             System.setProperty("java.security.policy", "java.policy");
-            Registry registry = LocateRegistry.getRegistry("10.28.207.24", 1099);
+            Registry registry = LocateRegistry.getRegistry("192.168.7.5", 1099);
 
             BazaInterface baza = (BazaInterface) registry.lookup("BazaSerwis");
 
